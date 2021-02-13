@@ -26,6 +26,10 @@ public:
     size_t length();
 
     int indexOf(TValue value);
+
+    int findIndexOf(const std::function<bool(TValue &item, const int &index)> &findFn);
+
+    void remove(const int &index);
 };
 
 template<class TValue>
@@ -74,6 +78,27 @@ int vector<TValue>::indexOf(TValue value) {
     }
 
     return -1;
+}
+
+template<class TValue>
+int vector<TValue>::findIndexOf(const std::function<bool(TValue &, const int &)> &findFn) {
+    int index = 0;
+    for (auto &item: *this) {
+        if (findFn(item, index)) {
+            return index;
+        }
+
+        index++;
+    }
+
+    return -1;
+}
+
+template<class TValue>
+void vector<TValue>::remove(const int &index) {
+    auto start = this->begin() + index;
+
+    this->erase(start, start + 1);
 }
 
 #endif //WEBX_VECTOR_H
