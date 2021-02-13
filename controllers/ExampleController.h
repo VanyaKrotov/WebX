@@ -5,7 +5,7 @@
 #ifndef TESTCLION_EXAMPLECONTROLLER_H
 #define TESTCLION_EXAMPLECONTROLLER_H
 
-#include "../Lib/Controller.h"
+#include "../lib/Controller.h"
 
 struct IFormData {
     string firstName;
