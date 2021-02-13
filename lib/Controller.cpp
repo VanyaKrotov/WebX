@@ -10,7 +10,7 @@ Controller *Controller::bindAction(Route *route) {
     return this;
 }
 
-Controller::Controller() {}
+Controller::Controller() = default;
 
 ControllerAction *Controller::findAction(HttpRequest *request) {
     const short prefixLength = routePrefix.length();
@@ -28,3 +28,28 @@ ControllerAction *Controller::findAction(HttpRequest *request) {
 
     return nullptr;
 }
+
+HttpResponse *Controller::ok(const string &content) {
+    return new HttpResponse(content, contentType);
+}
+
+HttpResponse *Controller::ok(object &content) {
+    return new HttpResponse(content, contentType);
+}
+
+HttpResponse *Controller::notFound(const string &content) {
+    return new HttpResponse(content, contentType, Http::EResponseStatus::NotFound);
+}
+
+HttpResponse *Controller::notFound(object &content) {
+    return new HttpResponse(content, contentType, Http::EResponseStatus::NotFound);
+}
+
+HttpResponse *Controller::badRequest(const string &content) {
+    return new HttpResponse(content, contentType, Http::EResponseStatus::BadRequest);
+}
+
+HttpResponse *Controller::badRequest(object &content) {
+    return new HttpResponse(content, contentType, Http::EResponseStatus::BadRequest);
+}
+

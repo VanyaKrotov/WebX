@@ -54,7 +54,9 @@ void list<TValue, Alloc>::parse(string json) {
     auto context = this;
 
     engine.parseArray(std::move(json), [context](Json value) {
-        context->push_back(JSON::parse<TValue>(value));
+        auto item = JSON::parse<TValue>(value);
+
+        context->push_back(*item);
     });
 }
 

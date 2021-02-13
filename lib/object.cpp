@@ -33,11 +33,11 @@ void object::parse(string json) {
 
     engine.parseObject(std::move(json), [&tempObject](string key, Json value) {
         auto pKey = JSON::parse<string>(std::move(key));
-        if (pKey.empty() || !tempObject.hasKey(pKey)) {
+        if (pKey == nullptr || pKey->empty() || !tempObject.hasKey(*pKey)) {
             return;
         }
 
-        tempObject[pKey]->setJson(std::move(value));
+        tempObject[*pKey]->setJson(std::move(value));
     });
 }
 

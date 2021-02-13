@@ -43,11 +43,11 @@ namespace JSON {
     Json stringify(void *data);
 
     template<class TValue>
-    static TValue parse(string json) {
-        auto *data = new TValue();
+    static TValue* parse(string json) {
+        auto data = new TValue();
         parse(data, json);
 
-        return *data;
+        return data;
     }
 
     void parse(int *distItem, string &json);

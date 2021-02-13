@@ -89,61 +89,6 @@ string Web::HttpResponse::getCharsetName(const ECharset &charsetType) {
     return charsetMap[charsetType];
 }
 
-Web::HttpResponse *Web::HttpResponse::ok(object &content) {
-    return new HttpResponse(content);
-}
-
-Web::HttpResponse *Web::HttpResponse::ok(const string &content) {
-    return new HttpResponse(content);
-}
-
-Web::HttpResponse *Web::HttpResponse::notFound(object &content) {
-    auto response = new HttpResponse(content);
-
-    response->status = Http::EResponseStatus::NotFound;
-
-    return response;
-}
-
-Web::HttpResponse *Web::HttpResponse::notFound(const string &content) {
-    auto response = new HttpResponse(content);
-
-    response->status = Http::EResponseStatus::NotFound;
-
-    return response;
-}
-
-Web::HttpResponse *Web::HttpResponse::badRequest(object &content) {
-    auto response = new HttpResponse(content);
-
-    response->status = Http::EResponseStatus::BadRequest;
-
-    return response;
-}
-
-Web::HttpResponse *Web::HttpResponse::badRequest(const string &content) {
-    auto response = new HttpResponse(content);
-
-    response->status = Http::EResponseStatus::BadRequest;
-
-    return response;
-}
-
-Web::HttpResponse *Web::HttpResponse::serverError(object &content) {
-    auto response = new HttpResponse(content);
-
-    response->status = Http::EResponseStatus::InternalServerError;
-
-    return response;
-}
-
-Web::HttpResponse *Web::HttpResponse::serverError(const string &content) {
-    auto response = new HttpResponse(content);
-
-    response->status = Http::EResponseStatus::InternalServerError;
-
-    return response;
-}
 
 Web::HttpResponse *Web::HttpResponse::redirect(const string &location) {
     auto response = new HttpResponse();
@@ -154,6 +99,22 @@ Web::HttpResponse *Web::HttpResponse::redirect(const string &location) {
     return response;
 }
 
-Web::HttpResponse *Web::HttpResponse::ok(const object &content) {
-    return ok((object &) content);
+Web::HttpResponse::HttpResponse(const string &content, const Web::Http::EContentType &contentType) : HttpResponse(
+        content) {
+    HttpResponse::contentType = contentType;
+}
+
+Web::HttpResponse::HttpResponse(object &content, const Web::Http::EContentType &contentType) : HttpResponse(
+        content) {
+    HttpResponse::contentType = contentType;
+}
+
+Web::HttpResponse::HttpResponse(const string &content, const Web::Http::EContentType &contentType,
+                                const Web::Http::EResponseStatus &status) : HttpResponse(content, contentType) {
+    HttpResponse::status = status;
+}
+
+Web::HttpResponse::HttpResponse(object &content, const Web::Http::EContentType &contentType,
+                                const Web::Http::EResponseStatus &status) : HttpResponse(content, contentType) {
+    HttpResponse::status = status;
 }

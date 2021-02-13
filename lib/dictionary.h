@@ -61,7 +61,10 @@ void dictionary<TKey, TValue, Pr, Alloc>::parse(string json) {
     auto context = this;
 
     engine.parseObject(std::move(json), [&context](string key, Json value) {
-        (*context)[JSON::parse<TKey>(key)] = JSON::parse<TValue>(value);
+        auto parsedKey = JSON::parse<TKey>(key);
+        auto parsedValue = JSON::parse<TValue>(value);
+
+        (*context)[*parsedKey] = *parsedValue;
     });
 }
 

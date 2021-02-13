@@ -92,7 +92,7 @@ FileContent StaticFile::getFileContent(const string &filePath) {
     auto file = std::ifstream(filePath, std::ios::binary | std::ios::ate);
 
     if (!file.is_open()) {
-        throw std::exception();
+        throw Exception::FileNotFoundException(string("File ${0} not found or cannot be opened!", {filePath}));
     }
 
     const auto contentType = StaticFile::getFileContentType(filePath);

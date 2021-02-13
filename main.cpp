@@ -1,12 +1,14 @@
 #include "lib/WebServer.h"
 #include <functional>
-#include "controllers/ExampleController.h"
-
+#include "controllers/TodoController.h"
+#include "models/others/Store.h"
 
 int main(int argsCount, ByteArray *args) {
     auto webServer = new WebServer();
 
-    webServer->use(new ExampleController);
+    auto store = new Store();
+
+    webServer->use(new TodoController(store));
 
     webServer->useStaticFile();
 

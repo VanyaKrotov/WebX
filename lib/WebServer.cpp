@@ -119,7 +119,7 @@ WebServer::WebServer() {
     try {
         auto[fileContent, type] = StaticFile::getFileContent("./appsettings.json");
 
-        WebServer::settings = JSON::parse<JSON::ServerSettings>(fileContent);
+        WebServer::settings = *JSON::parse<JSON::ServerSettings>(fileContent);
     } catch (const Exception &exception) {
         Console::error(exception.what());
     }
@@ -148,8 +148,9 @@ HttpResponse *WebServer::useWorker(HttpRequest *request) {
         return exceptionHandler(request, exception);
     }
 
-    throw Exception::FileNotFoundException(
-            string(ERROR_TEMPLATE, {Http::EResponseStatus::NotFound, request->path, __FUNCTION__}));
+    return new HttpResponse(
+            string(ERROR_TEMPLATE, {Http::EResponseStatus::NotFound, request->path, __FUNCTION__}),
+            Http::EContentType::Html, Http::EResponseStatus::NotFound);
 }
 
 void WebServer::use(Controller *controller) {

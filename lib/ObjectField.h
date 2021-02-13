@@ -36,7 +36,9 @@ namespace JSON {
 
     template<class TValue>
     void ObjectField<TValue>::setJson(Json json) {
-        *value = JSON::parse<TValue>(json);
+        auto newValue = JSON::parse<TValue>(json);
+
+        *value = *newValue;
     }
 
     template<class TValue>

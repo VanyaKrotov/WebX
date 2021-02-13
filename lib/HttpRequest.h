@@ -36,7 +36,7 @@ namespace Web {
         explicit HttpRequest(string *request);
 
         template<class TBody>
-        TBody getDataFromBody();
+        TBody* getDataFromBody();
 
         static string urlDecode(string &data);
 
@@ -46,7 +46,7 @@ namespace Web {
     };
 
     template<class TBody>
-    TBody Web::HttpRequest::getDataFromBody() {
+    TBody* Web::HttpRequest::getDataFromBody() {
         if (headers.hasKey("Content-Type") && headers["Content-Type"].find("application/json") != -1) {
             return JSON::parse<TBody>(body);
         }

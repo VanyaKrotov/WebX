@@ -19,15 +19,29 @@ namespace Web {
     private:
         vector<Route *> routes;
 
+
     public:
         Controller();
 
         ControllerAction *findAction(HttpRequest *request);
 
     protected:
+        Http::EContentType contentType = Http::EContentType::Html;
         string routePrefix;
 
         Controller *bindAction(Route *route);
+
+        virtual HttpResponse *ok(const string &content);
+
+        virtual HttpResponse *ok(object &content);
+
+        virtual HttpResponse *badRequest(const string &content);
+
+        virtual HttpResponse *badRequest(object &content);
+
+        virtual HttpResponse *notFound(const string &content);
+
+        virtual HttpResponse *notFound(object &content);
     };
 }
 
