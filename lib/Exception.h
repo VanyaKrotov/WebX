@@ -19,11 +19,11 @@ public:
 
     explicit Exception(const string &message, const int &code = 0);
 
-    int errorCode() const;
+    int errorCode();
 
-    static Exception FileNotFoundException(const string &message);
+    static Exception FileNotFoundException(const string &message = "");
 
-    static Exception ArgumentException(const string &message);
+    static Exception ArgumentException(const string &message = "");
 };
 
 

@@ -46,7 +46,7 @@ namespace Web {
 
         void useStaticFile(const string &rootPath = "./static");
 
-        HttpResponse *exceptionHandler(HttpRequest *request, const Exception &exception);
+        HttpResponse *exceptionHandler(HttpRequest *request, Exception exception);
 
         int run();
 

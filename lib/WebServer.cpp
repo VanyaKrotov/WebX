@@ -22,7 +22,11 @@ void WebServer::clientHandler(Socket *clientSocket) {
         auto httpRequest = new HttpRequest(requestContent);
         auto httpResponse = useWorker(httpRequest);
 
-        Console::writeLine(string("path: \"${0}\" code: ${1}", {httpRequest->path, httpResponse->status}));
+        if (httpResponse->status >= Http::EResponseStatus::BadRequest) {
+            Console::error(string("path: \"${0}\" code: ${1}", {httpRequest->path, httpResponse->status}));
+        } else {
+            Console::success(string("path: \"${0}\" code: ${1}", {httpRequest->path, httpResponse->status}));
+        };
 
         clientSocket->sendResponse(httpResponse);
 
@@ -85,7 +89,7 @@ int WebServer::serverHandler(const std::function<void(Socket(*))> &handler) {
         return 1;
     }
 
-    Console::writeLine(string("Server started: http://${0}:${1}", {settings.host, settings.port}));
+    Console::success(string("Server started: http://${0}:${1}", {settings.host, settings.port}));
 
     try {
         while (true) {
@@ -112,8 +116,13 @@ int WebServer::serverHandler(const std::function<void(Socket(*))> &handler) {
 }
 
 WebServer::WebServer() {
-    auto[fileContent, type] = StaticFile::getFileContent("./appsettings.json");
-    WebServer::settings = JSON::parse<JSON::ServerSettings>(fileContent);
+    try {
+        auto[fileContent, type] = StaticFile::getFileContent("./appsettings.json");
+
+        WebServer::settings = JSON::parse<JSON::ServerSettings>(fileContent);
+    } catch (const Exception &exception) {
+        Console::error(exception.what());
+    }
 }
 
 int WebServer::run() {
@@ -139,7 +148,7 @@ HttpResponse *WebServer::useWorker(HttpRequest *request) {
         return exceptionHandler(request, exception);
     }
 
-    return HttpResponse::notFound(
+    throw Exception::FileNotFoundException(
             string(ERROR_TEMPLATE, {Http::EResponseStatus::NotFound, request->path, __FUNCTION__}));
 }
 
@@ -173,7 +182,7 @@ void WebServer::useExceptionHandler(const std::function<void(HttpResponse *, con
     externalExceptionHandler = handler;
 }
 
-HttpResponse *WebServer::exceptionHandler(HttpRequest *request, const Exception &exception) {
+HttpResponse *WebServer::exceptionHandler(HttpRequest *request, Exception exception) {
     auto response = new HttpResponse;
 
     response->status = (Http::EResponseStatus) exception.errorCode();

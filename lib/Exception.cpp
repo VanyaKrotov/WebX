@@ -6,7 +6,6 @@
 #include "EResponseStatus.h"
 
 
-
 Exception::Exception() : std::exception() {
     code = 0;
 }
@@ -15,7 +14,7 @@ Exception::Exception(const string &message, const int &code) : std::exception(me
     Exception::code = code;
 }
 
-int Exception::errorCode() const {
+int Exception::errorCode() {
     return code;
 }
 
