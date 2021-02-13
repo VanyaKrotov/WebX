@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.16)
+project(WebX)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(WebX main.cpp Lib/types.h Lib/string.cpp Lib/string.h Lib/list.h Lib/dictionary.h Lib/algorithm.cpp Lib/algorithm.h Lib/vector.h Lib/JSON.cpp Lib/JSON.h Lib/object.cpp Lib/object.h Lib/Field.cpp Lib/Field.h Lib/ObjectField.h Lib/JSONOptions.h Lib/Console.cpp Lib/Console.h Lib/Date.cpp Lib/Date.h Lib/BaseDateTime.cpp Lib/BaseDateTime.h Lib/Time.cpp Lib/Time.h Lib/DateTime.cpp Lib/DateTime.h Lib/StringifyEngine.cpp Lib/StringifyEngine.h Lib/ParseEngine.cpp Lib/ParseEngine.h Lib/HttpRequest.cpp Lib/HttpRequest.h Lib/Query.cpp Lib/Query.h Lib/Cookie.cpp Lib/Cookie.h Lib/WebServer.cpp Lib/WebServer.h Lib/HttpResponse.cpp Lib/HttpResponse.h Lib/ECharset.h Lib/ServerSettings.cpp Lib/ServerSettings.h Lib/EHttpType.h Lib/EContentType.h Lib/EResponseStatus.h Lib/RegexConstants.h Lib/Route.cpp Lib/Route.h Lib/ECommandType.h Lib/Command.cpp Lib/Command.h Lib/Socket.cpp Lib/Socket.h Lib/Controller.cpp Lib/Controller.h Lib/StaticFile.cpp Lib/StaticFile.h Lib/Exception.cpp Lib/Exception.h Controllers/ExampleController.cpp Controllers/ExampleController.h)
