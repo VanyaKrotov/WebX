@@ -2,8 +2,8 @@
 // Created by Ivan on 13.02.2021.
 //
 
-#ifndef TESTCLION_EXAMPLECONTROLLER_H
-#define TESTCLION_EXAMPLECONTROLLER_H
+#ifndef WEBX_EXAMPLECONTROLLER_H
+#define WEBX_EXAMPLECONTROLLER_H
 
 #include "../lib/Controller.h"
 
@@ -40,4 +40,4 @@ private:
 };
 
 
-#endif //TESTCLION_EXAMPLECONTROLLER_H
+#endif //WEBX_EXAMPLECONTROLLER_H
